@@ -1,8 +1,10 @@
+import 'package:bmi_calculator_flutter/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
 import 'constants.dart';
+import 'round_button.dart';
 
 class InputPage extends StatefulWidget {
   const InputPage({super.key});
@@ -14,7 +16,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   GenderType selectedGender = GenderType.none;
   int height = 180;
-
+  int weight = 60;
+  int age = 20;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,35 +119,131 @@ class _InputPageState extends State<InputPage> {
               onPress: () {},
             ),
           ),
-          // Expanded(
-          //   child: Row(
-          //     children: const [
-          //       Expanded(
-          //         child: ReusableCard(
-          //           colour: activeCardColor,
-          //           cardChild: IconContent(
-          //             label: 'Card 4',
-          //             icon: FontAwesomeIcons.earthAsia,
-          //           ),
-          //         ),
-          //       ),
-          //       Expanded(
-          //         child: ReusableCard(
-          //           colour: activeCardColor,
-          //           cardChild: IconContent(
-          //             label: 'Card 5',
-          //             icon: FontAwesomeIcons.earthAmericas,
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          Container(
-            color: kActiveContainerColor,
-            margin: const EdgeInsets.only(top: 10.0),
-            height: kBottomContainerHeight,
-            width: double.infinity,
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: ReusableCard(
+                    colour: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Weight',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: kNumberStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPress: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                              onLongPress: () {
+                                setState(() {
+                                  weight = weight - 5;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPress: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                              onLongPress: () {
+                                setState(() {
+                                  weight = weight + 5;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    onPress: () => {},
+                  ),
+                ),
+                Expanded(
+                  child: ReusableCard(
+                    colour: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Age',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kNumberStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onLongPress: () {
+                                setState(() {
+                                  age = age - 5;
+                                });
+                              },
+                              onPress: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onLongPress: () {
+                                setState(() {
+                                  age = age + 5;
+                                });
+                              },
+                              onPress: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    onPress: () => {},
+                  ),
+                ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            child: Container(
+              color: kActiveContainerColor,
+              margin: const EdgeInsets.only(top: 10.0),
+              height: kBottomContainerHeight,
+              width: double.infinity,
+              child: const Text(
+                'Calculate',
+              ),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/results');
+            },
           ),
         ],
       ),
