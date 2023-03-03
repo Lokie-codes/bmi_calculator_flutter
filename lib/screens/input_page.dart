@@ -1,10 +1,12 @@
-import 'package:bmi_calculator_flutter/results_page.dart';
+import 'package:bmi_calculator_flutter/screens/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'icon_content.dart';
-import 'reusable_card.dart';
-import 'constants.dart';
-import 'round_button.dart';
+import '../components/bottom_button.dart';
+import '../components/icon_content.dart';
+import '../components/reusable_card.dart';
+import '../constants.dart';
+import '../components/round_button.dart';
+import 'package:bmi_calculator_flutter/bmi_brain.dart';
 
 class InputPage extends StatefulWidget {
   const InputPage({super.key});
@@ -231,18 +233,22 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          GestureDetector(
-            child: Container(
-              color: kActiveContainerColor,
-              margin: const EdgeInsets.only(top: 10.0),
-              height: kBottomContainerHeight,
-              width: double.infinity,
-              child: const Text(
-                'Calculate',
-              ),
-            ),
+          BottomButton(
+            buttonTitle: 'Calculate',
             onTap: () {
-              Navigator.pushNamed(context, '/results');
+              BMICalculatorBrain calc =
+                  BMICalculatorBrain(height: height, weight: weight);
+              // Navigator.pushNamed(context, '/results');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsPage(
+                    bmiResult: calc.calculateBMI(),
+                    resultText: calc.getResult(),
+                    interpretation: calc.getInterpretation(),
+                  ),
+                ),
+              );
             },
           ),
         ],
